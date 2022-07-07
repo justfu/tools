@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>excel格式转换</title>
+</head>
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<body>
+<h1>excel格式转换</h1>
+<textarea id="content" style="width: 300px;height: 500px">请输入文本</textarea>
+输入分隔符：<input id="sep" type="text">
+<button id="change">立即转换</button>
+<h1>转换后的结果:</h1>
+<textarea id="change_over" style="width: 600px;height: 200px"></textarea>
+</body>
+<script>
+    $(document).ready(function(){
+        $("#change").click(function(){
+            var content = $('#content').val()
+            var sep = $('#sep').val()
+            if(sep != ''){
+                content = content.replaceAll("\n", sep)
+            }else{
+                content = content.replaceAll("\n",",")
+            }
+            var char = content.charAt(content.length - 1)
+            if(char == ','){
+                content = content.substr(0, content.length - 1)
+            }
+
+            $('#change_over').html(content)
+        });
+    });
+</script>
+</html>
