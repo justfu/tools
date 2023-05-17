@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>excel格式转换</title>
+  </head>
+  <style>
+    .top {
+      display: flex;
+      align-items: flex-end;
+    }
+  </style>
+  <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+  <body>
+    <div class="top">
+      <textarea
+        id="content"
+        style="width: 300px; height: 500px"
+        placeholder="请输入文本"
+      ></textarea>
+      <div>
+        <div>
+          是否过滤重复<input
+            name="checkbox"
+            id="checkbox"
+            type="checkbox"
+            value="false"
+          />
+        </div>
+        <div>
+          输入分隔符：<input id="sep" type="text" /><button id="change">
+            立即转换
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="info">
+      <span class="length"></span>
+    </div>
+    <h1>转换后的结果:</h1>
+    <textarea id="change_over" style="width: 600px; height: 200px"></textarea>
+  </body>
+  <script>
+    $(document).ready(function () {
+      $("#change").click(function () {
+        let isFilter = document.getElementById("checkbox").checked;
+        var content = $("#content").val().trim();
+        var sep = $("#sep").val() || ",";
+        content = content.replace(/\s+/g, sep);
+        var char = content.charAt(content.length - 1);
+        if (char == sep) {
+          content = content.substr(0, content.length - 1);
+        }
+        if (isFilter) {
+          let arr = content.split(sep);
+          let obj = {};
+          arr.map((item) => {
+            obj[item] = 1;
+          });
+          let arr1 = [];
+          for (let key in obj) {
+            arr1.push(key);
+          }
+          content = arr1.join(sep);
+        }
+
+        $("#change_over").html(content);
+        const num = content.split(sep).length;
+        $(".info .length").html(`数量：${num}`);
+      });
+    });
+  </script>
+</html>
